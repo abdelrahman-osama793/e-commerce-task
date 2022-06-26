@@ -16,6 +16,24 @@ const signUpUser = async (req, res, next) => {
     }
 }
 
+const loginUser = async (req, res, next) => {
+    try {
+        const loadedUser = await User.findOne({ where: { email: req.body.email } })
+        console.log(loadedUser);
+        if (!loadedUser) {
+            return res.status(404).json({ error: { message: 'Either email or password are wrong' } })
+        }
+        const comparePassword = await bcrypt.compare(req.body.password, loadedUser.password)
+        if (!comparePassword) {
+            return res.status(404).json({ error: { message: 'Either email or password are wrong' } })
+        }
+        return res.status(200).json(loadedUser)
+    } catch (e) {
+        console.log(e);
+        return res.status(500).json(e)
+    }
+}
+
 const getAllUsers = async (req, res, next) => {
     try {
         const users = await User.findAll()
@@ -27,5 +45,6 @@ const getAllUsers = async (req, res, next) => {
 
 module.exports = {
     signUpUser,
+    loginUser,
     getAllUsers
 }
