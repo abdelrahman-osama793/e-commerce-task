@@ -14,7 +14,7 @@ const Order = db.define("order", {
     allowNull: false,
   },
   subtotal: {
-    type: sequelize.STRING,
+    type: sequelize.FLOAT,
     allowNull: false,
   },
   total: {
@@ -37,8 +37,8 @@ const Order = db.define("order", {
 
 Order.associate = (models) => {
   Order.belongsTo(models.user, {
-    foreignKey: "user_id",
-    as: "user",
+    foreignKey: "order_id",
+    as: "orders",
   });
 };
 

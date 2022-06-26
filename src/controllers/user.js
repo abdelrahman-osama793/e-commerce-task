@@ -11,7 +11,6 @@ const signUpUser = async (req, res, next) => {
         })
         return res.status(200).json({ message: "Account Created Successfully", createdUser });
     } catch (e) {
-        console.log(e);
         return res.status(500).json(e);
     }
 }
