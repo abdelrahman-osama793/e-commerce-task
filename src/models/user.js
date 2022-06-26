@@ -35,6 +35,7 @@ const User = db.define(
 
 User.hasMany(Order, {
   foreignKey: "user_id",
+  as: "order",
 });
 
 module.exports = User;
