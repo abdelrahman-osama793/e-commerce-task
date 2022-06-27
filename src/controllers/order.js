@@ -16,7 +16,7 @@ const makeOrder = async (req, res, next) => {
       shipping_address: req.body.shipping_address,
       userId: req.body.userId,
     };
-    const createdOrder = await Order.create(data);
+    const createdOrder = await Order.create(data)
     return res
       .status(200)
       .json({ message: "Order Created Successfully", createdOrder });
@@ -25,6 +25,22 @@ const makeOrder = async (req, res, next) => {
     return res.status(500).json(e);
   }
 };
+
+const getOrder = async (req, res, next) => {
+  let id = req.params.id
+  try {
+    if (!id) {
+      return res.status(404).json({
+        error: {
+          message: 'Order does not exist'
+        }
+      })
+    }
+    const loadedOrder = await Order.findOne({ where: id })
+  } catch (error) {
+
+  }
+}
 
 module.exports = {
   makeOrder,

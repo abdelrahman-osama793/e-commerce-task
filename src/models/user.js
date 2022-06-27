@@ -34,7 +34,8 @@ const User = db.define(
 );
 
 User.hasMany(Order, {
-  as: "orders",
+  onDelete: 'CASCADE'
 });
+
 
 module.exports = User;

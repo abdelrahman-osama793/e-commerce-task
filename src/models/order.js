@@ -1,5 +1,6 @@
 const sequelize = require("sequelize");
 const db = require("../util/database");
+const Item = require("./item");
 const User = require("./user");
 
 const Order = db.define("order", {
@@ -33,12 +34,26 @@ const Order = db.define("order", {
     type: sequelize.STRING,
     allowNull: false,
   },
+  userId: {
+    type: sequelize.INTEGER,
+    references: {
+      model: User,
+      key: "UserID"
+    }
+  }
 });
 
 Order.associate = (models) => {
+  Order.belongsToMany(Item, {
+    through: 'order_items',
+    as: 'items',
+    foreignKey: 'order_id'
+  })
+}
+
+Order.associate = (models) => {
   Order.belongsTo(models.user, {
-    foreignKey: "order_id",
-    as: "orders",
+    foreignKey: "orderId",
   });
 };
 

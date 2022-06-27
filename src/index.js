@@ -16,7 +16,7 @@ app.use("/orders", orderRouter);
 //IIFO
 (async () => {
   try {
-    await sequelize.sync({ force: true });
+    await sequelize.sync({ force: false });
     app.listen(port, () =>
       console.log(`Example app listening on port ${port}!`)
     );

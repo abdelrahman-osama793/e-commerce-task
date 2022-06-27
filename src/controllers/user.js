@@ -42,8 +42,27 @@ const getAllUsers = async (req, res, next) => {
     }
 }
 
+const getProfileWithOrdersAndCount = async (req, res, next) => {
+    try {
+        let countOrders, orders
+        const loadedUser = await User.findOne({ where: { id: req.params.id } }).then(async user => {
+            countOrders = await user.countOrders()
+            orders = await user.getOrders()
+            return ({
+                user: user,
+                orders_count: countOrders,
+                orders: orders
+            })
+        })
+        res.status(200).json(loadedUser)
+    } catch (e) {
+        console.log(e)
+    }
+}
+
 module.exports = {
     signUpUser,
     loginUser,
-    getAllUsers
+    getAllUsers,
+    getProfileWithOrdersAndCount
 }

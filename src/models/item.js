@@ -1,13 +1,8 @@
 const sequelize = require("sequelize");
 const db = require("../util/database");
+const Order = require("./order");
 
 const Item = db.define("item", {
-  id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true,
-    allowNull: false,
-  },
   name: {
     type: sequelize.STRING,
     allowNull: false,
@@ -27,5 +22,13 @@ const Item = db.define("item", {
     defaultValue: true,
   },
 });
+
+Item.associate = (models) => {
+  Item.belongsToMany(Order, {
+    through: 'order_items',
+    as: 'order',
+    foreignKey: 'item_id'
+  })
+}
 
 module.exports = Item;
