@@ -8,11 +8,11 @@ const Item = db.define("item", {
     allowNull: false,
   },
   price: {
-    type: sequelize.STRING,
+    type: sequelize.INTEGER,
     allowNull: false,
   },
   quantity: {
-    type: sequelize.STRING,
+    type: sequelize.INTEGER,
     allowNull: false,
     defaultValue: 1,
   },
@@ -25,10 +25,9 @@ const Item = db.define("item", {
 
 Item.associate = (models) => {
   Item.belongsToMany(Order, {
-    through: 'order_items',
-    as: 'order',
-    foreignKey: 'item_id'
-  })
-}
+    through: "order_items",
+    foreignKey: "item_id",
+  });
+};
 
 module.exports = Item;

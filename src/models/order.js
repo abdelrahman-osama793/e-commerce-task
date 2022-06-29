@@ -38,7 +38,7 @@ const Order = db.define("order", {
     type: sequelize.INTEGER,
     references: {
       model: User,
-      key: "UserID"
+      key: "id"
     }
   }
 });
@@ -46,7 +46,6 @@ const Order = db.define("order", {
 Order.associate = (models) => {
   Order.belongsToMany(Item, {
     through: 'order_items',
-    as: 'items',
     foreignKey: 'order_id'
   })
 }
